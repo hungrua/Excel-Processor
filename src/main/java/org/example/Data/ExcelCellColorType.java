@@ -1,4 +1,4 @@
-package org.example.DataRow;
+package org.example.Data;
 
 public enum ExcelCellColorType {
     NOT_DUPLICATED("#FFA6A6"),

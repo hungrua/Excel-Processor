@@ -1,26 +1,26 @@
 <Configuration>
     <Appenders>
-        <Console name="STDOUT">
-            <PatternLayout pattern="%highlight{[%d]} %-5p %c %C - %m%n" disableAnsi="false"/>
-        </Console>
-        <File name="LogFile" fileName="log/apps.log">
-            <PatternLayout pattern="[%d] %-5p %c - %m%n"/>
-        </File>
-        <!--        <RollingFile name="RollingFile" fileName="log/rolling.log"-->
-        <!--                     filePattern="log/rollingLog_%d{dd-MM-yyyy}_%i.log">-->
+        <!--        <Console name="STDOUT">-->
+        <!--            <PatternLayout pattern="%highlight{[%d]} %-5p %c %C - %m%n" disableAnsi="false"/>-->
+        <!--        </Console>-->
+        <!--        <File name="LogFile" fileName="log/apps.log">-->
         <!--            <PatternLayout pattern="[%d] %-5p %c - %m%n"/>-->
-        <!--            <Policies>-->
-        <!--                <TimeBasedTriggeringPolicy interval="1"/>-->
-        <!--                <OnStartupTriggeringPolicy/>-->
-        <!--                <SizeBasedTriggeringPolicy size="20 MB"/>-->
-        <!--            </Policies>-->
-        <!--        </RollingFile>-->
+        <!--        </File>-->
+        <RollingFile name="RollingFile" fileName="log/rolling.log"
+                     filePattern="log/rollingLog_%d{dd-MM-yyyy}_%i.log">
+            <PatternLayout pattern="[%d] %-5p %c - %m%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1"/>
+                <OnStartupTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy size="20 MB"/>
+            </Policies>
+        </RollingFile>
     </Appenders>
     <Loggers>
         <Root level="all">
-            <Appender-ref ref="STDOUT"/>
-            <AppenderRef ref="LogFile"/>
-            <!--            <AppenderRef ref="RollingFile"/>-->
+            <!--            <Appender-ref ref="STDOUT"/>-->
+            <!--            <AppenderRef ref="LogFile"/>-->
+            <AppenderRef ref="RollingFile"/>
         </Root>
     </Loggers>
 </Configuration>

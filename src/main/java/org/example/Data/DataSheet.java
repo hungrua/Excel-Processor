@@ -1,4 +1,4 @@
-package org.example.DataRow;
+package org.example.Data;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -12,15 +12,6 @@ public class DataSheet {
     private List<DataRow> rows; // Danh sách các row dữ liệu
     private Set<String> indexColumns; // Danh sách index theo chuỗi trong excel
     private Map<String, DataColumn> columnIndexMap; // Map để lấy tham chiếu dữ liệu lấy Data Columns bằng index theo chữ cái
-    private static final Logger log = LogManager.getLogger();
-
-    public Map<String, DataColumn> getColumnIndexMap() {
-        if (columnIndexMap == null) {
-            columnIndexMap = this.columns.stream()
-                    .collect(Collectors.toMap(DataColumn::getColumn_position, dc -> dc));
-        }
-        return columnIndexMap;
-    }
 
     public DataSheet(String sheet_name, List<DataColumn> columns) {
         this.sheet_name = sheet_name;
@@ -54,7 +45,25 @@ public class DataSheet {
     }
 
     private Set<String> getIndexColumnsSet(List<DataColumn> dataColumnList) {
-        return new HashSet<>(dataColumnList.stream().map(DataColumn::getColumn_position).toList());
+        return dataColumnList.stream()
+                .map(DataColumn::getColumn_position)
+                .filter(pos -> pos != null && !pos.isBlank())
+                .collect(Collectors.toCollection(LinkedHashSet::new));
+    }
+
+    public Map<String, DataColumn> getColumnIndexMap() {
+        if (columnIndexMap == null) {
+            columnIndexMap = this.columns.stream()
+                    .filter(dc -> {
+                        String pos = dc.getColumn_position();
+                        return pos != null && !pos.isBlank(); // bỏ qua null & rỗng trắng
+                    })
+                    .collect(Collectors.toMap(
+                            DataColumn::getColumn_position,
+                            dc -> dc
+                    ));
+        }
+        return columnIndexMap;
     }
 
     public void add(DataRow val) {

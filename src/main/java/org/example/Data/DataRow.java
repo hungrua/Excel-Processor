@@ -1,4 +1,4 @@
-package org.example.DataRow;
+package org.example.Data;
 
 import java.util.ArrayList;
 import java.util.List;

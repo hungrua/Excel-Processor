@@ -1,4 +1,4 @@
-package org.example.DataRow;
+package org.example.Data;
 
 public class DataCell {
     private DataColumn column;
